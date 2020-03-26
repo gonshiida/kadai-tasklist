@@ -4,7 +4,7 @@
 
 Route::get('/', 'TasksController@index');
 
-Route::resource('tasks', 'TasksController');
+
 
 // ユーザ登録
 Route::get('signup', 'Auth\RegisterController@showRegistrationForm')->name('signup.get');
@@ -17,6 +17,5 @@ Route::get('logout', 'Auth\LoginController@logout')->name('logout.get');
 
 // ユーザ機能
 Route::group(['middleware' => 'auth'], function () {
-    Route::resource('users', 'UsersController', ['only' => ['index', 'show']]);
-    Route::resource('tasklists', 'TasklistsController', ['only' => ['store', 'destroy']]);
+   Route::resource('tasks', 'TasksController');
 });

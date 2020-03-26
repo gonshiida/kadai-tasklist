@@ -4,18 +4,18 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class TasklistsController extends Controller
+class TasksController extends Controller
 {
     public function index()
     {
         $data = [];
         if (\Auth::check()) {
             $user = \Auth::user();
-            $tasklists = $user->tasklists()->orderBy('created_at', 'desc')->paginate(10);
+            $tasks = $user->tasks()->get();
             
             $data = [
                 'user' => $user,
-                'tasklists' => $tasklists,
+                'tasks' => $tasks,
             ];
         }
         
@@ -28,7 +28,7 @@ class TasklistsController extends Controller
             'content' => 'required|max:191',
         ]);
 
-        $request->user()->tasklists()->create([
+        $request->user()->tasks()->create([
             'content' => $request->content,
         ]);
 
@@ -37,10 +37,10 @@ class TasklistsController extends Controller
     
     public function destroy($id)
     {
-        $tasklist = \App\Tasklist::find($id);
+        $task = \App\Tasklist::find($id);
 
-        if (\Auth::id() === $tasklist->user_id) {
-            $tasklist->delete();
+        if (\Auth::id() === $task->user_id) {
+            $task->delete();
         }
 
         return back();
@@ -49,11 +49,11 @@ class TasklistsController extends Controller
     public function show($id)
     {
         $user = User::find($id);
-        $tasklists = $user->tasklists()->orderBy('created_at', 'desc')->paginate(10);
+        $tasks = $user->tasks()->orderBy('created_at', 'desc')->paginate(10);
 
         $data = [
             'user' => $user,
-            'tasklists' => $tasklists,
+            'tasks' => $tasks,
         ];
 
         $data += $this->counts($user);
