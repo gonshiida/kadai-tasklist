@@ -2,15 +2,16 @@
 
 @section('content')
 
-<h1>メッセージ一覧</h1>
 
-    @if (count($tasks) > 0)
+
+    @if (Auth::check())
+    <h1>タスク一覧</h1>
         <table class="table table-striped">
             <thead>
                 <tr>
                     <th>id</th>
                     <th>ステータス</th>
-                    <th>メッセージ</th>
+                    <th>タスク</th>
                 </tr>
             </thead>
             <tbody>
@@ -23,8 +24,17 @@
                 @endforeach
             </tbody>
         </table>
+         {!! link_to_route('tasks.create', '新規タスクの投稿', [], ['class' => 'btn btn-primary']) !!}
+        @else
+        <div class="center jumbotron">
+            <div class="text-center">
+                <h1>Welcome to the Tasks</h1>
+                {!! link_to_route('signup.get', 'Sign up now!', [], ['class' => 'btn btn-lg btn-primary']) !!}
+            </div>
+        </div>
+    
     @endif
     
-    {!! link_to_route('tasks.create', '新規メッセージの投稿', [], ['class' => 'btn btn-primary']) !!}
+   
 
 @endsection
