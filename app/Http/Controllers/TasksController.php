@@ -59,6 +59,7 @@ class TasksController extends Controller
         if (\Auth::id() === $task->user_id) {
         return view('tasks.show', [
             'task' => $task,
+            
         ]);
         }else{
             return redirect('/');
@@ -89,17 +90,17 @@ class TasksController extends Controller
             'content' => 'required|max:191',
         ]);
         
-         if (\Auth::id() === $task->user_id) {
-            $task = Task::find($id);
+        
+        $task = Task::find($id);
         $task->status = $request->status;
         $task->content = $request->content;
         $task->save();
-        }else{
+        
             return redirect('/');
-        }
+        
         
 
-        return redirect('/');
+        
     }
 
     // deleteでtasks/idにアクセスされた場合の「削除処理」
@@ -111,6 +112,6 @@ class TasksController extends Controller
             $task->delete();
         }
 
-        return back();
+       return redirect('/');
     }
 }
