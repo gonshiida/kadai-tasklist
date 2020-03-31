@@ -75,9 +75,9 @@ class TasksController extends Controller
             return view('tasks.edit', [
             'task' => $task,
         ]);
-            return redirect('/');
+            
         }
-        
+        return redirect('/');
     }
 
     // putまたはpatchでtasks/idにアクセスされた場合の「更新処理」
