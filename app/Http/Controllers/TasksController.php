@@ -57,14 +57,13 @@ class TasksController extends Controller
         $task = Task::find($id);
         
         if (\Auth::id() === $task->user_id) {
-        return view('tasks.show', [
+            return view('tasks.show', [
             'task' => $task,
-            
-        ]);
-        }else{
-            return redirect('/');
+            ]);
+               // 位置がおかしくないですか？
         }
-        
+// 何も指定がない = 何も行われない
+        return redirect('/');
     }
 
     // getでtasks/id/editにアクセスされた場合の「更新画面表示処理」
@@ -76,7 +75,6 @@ class TasksController extends Controller
             return view('tasks.edit', [
             'task' => $task,
         ]);
-        }else{
             return redirect('/');
         }
         
